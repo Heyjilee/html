@@ -213,11 +213,6 @@
             transition: background-color 220ms ease, transform 220ms ease, border-color 220ms ease;
         }
 
-        .session-item:hover {
-            background-color: rgba(211, 243, 107, 0.1);
-            transform: translateY(-3px);
-        }
-
         .session-item h2 {
             margin: 0;
             font-size: clamp(22px, 3.2vw, 42px);
@@ -227,8 +222,15 @@
             transition: color 220ms ease;
         }
 
-        .session-item:hover h2 {
-            color: var(--accent);
+        @media (hover: hover) and (pointer: fine) {
+            .session-item:hover {
+                background-color: rgba(211, 243, 107, 0.1);
+                transform: translateY(-3px);
+            }
+
+            .session-item:hover h2 {
+                color: var(--accent);
+            }
         }
 
         .session-item:nth-child(even) {
@@ -407,21 +409,21 @@
             </div>
         </section>
 
-        <section class="panel sessions" id="sessions" aria-labelledby="sessions-title">
-           <ul class="session-list" aria-label="제공 서비스">
-            <li class="session-item">
-                <h2>상세페이지</h2>
-            </li>
-            <li class="session-item">
-                <h2>디자인 리뉴얼</h2>
-            </li>
-            <li class="session-item">
-                <h2>프리미어 편집작업</h2>
-            </li>
-            <li class="session-item">
-                <h2>애프터 이펙트 모션작업</h2>
-            </li>
-           </ul>
+        <section class="panel sessions" id="sessions" aria-label="서비스">
+            <ul class="session-list" aria-label="제공 서비스">
+                <li class="session-item">
+                    <h2>상세페이지</h2>
+                </li>
+                <li class="session-item">
+                    <h2>디자인 리뉴얼</h2>
+                </li>
+                <li class="session-item">
+                    <h2>프리미어 편집작업</h2>
+                </li>
+                <li class="session-item">
+                    <h2>애프터 이펙트 모션작업</h2>
+                </li>
+            </ul>
             <a class="contact-link" href="mailto:hello@moon.studio">함께 이야기 나눠요 <span>↗</span></a>
         </section>
     </main>
