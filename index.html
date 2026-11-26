@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f1ea">
+    <title>MOON — Creative Portfolio</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --paper: #f4f1ea;
+            --ink: #20231f;
+            --muted: #77786f;
+            --accent: #d3f36b;
+            --line: rgba(32, 35, 31, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .site-header {
+            position: fixed;
+            z-index: 10;
+            inset: 0 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 5.5vw;
+            border-bottom: 1px solid var(--line);
+            background: rgba(244, 241, 234, 0.84);
+            backdrop-filter: blur(12px);
+        }
+
+        .brand {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+        }
+
+        .site-nav {
+            display: flex;
+            gap: clamp(18px, 3vw, 46px);
+            font-size: 12px;
+            letter-spacing: 0.08em;
+        }
+
+        .site-nav a {
+            transition: opacity 180ms ease;
+        }
+
+        .site-nav a:hover {
+            opacity: 0.55;
+        }
+
+        .wrap {
+            width: 100%;
+        }
+
+        .panel {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            min-height: 100svh;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            padding: 120px 10vw 72px;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .eyebrow {
+            margin: 0 0 26px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .hero {
+            background:
+                radial-gradient(ellipse at 83% 45%, rgba(211, 243, 107, 0.62), transparent 25%),
+                var(--paper);
+        }
+
+        .hero::after {
+            position: absolute;
+            right: 12%;
+            bottom: 13%;
+            width: clamp(90px, 13vw, 190px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(32, 35, 31, 0.35);
+            border-radius: 50%;
+            content: "";
+            animation: orbit 18s linear infinite;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0;
+            font-size: clamp(68px, 13.5vw, 190px);
+            font-weight: 800;
+            letter-spacing: -0.09em;
+            line-height: 0.86;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero-copy {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            max-width: 790px;
+            margin-top: 40px;
+        }
+
+        .hero-copy p,
+        .profile-copy {
+            margin: 0;
+            font-size: clamp(15px, 1.5vw, 20px);
+            line-height: 1.8;
+        }
+
+        .scroll-note {
+            flex: 0 0 auto;
+            color: var(--muted);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+        }
+
+        .profile {
+            background: #e8e5dc;
+        }
+
+        .profile-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(240px, 0.9fr);
+            align-items: end;
+            gap: 8vw;
+        }
+
+        .profile h2,
+        .sessions h2 {
+            margin: 0;
+            font-size: clamp(54px, 9vw, 124px);
+            font-weight: 700;
+            letter-spacing: -0.08em;
+            line-height: 0.95;
+        }
+
+        .profile-copy {
+            max-width: 390px;
+            padding-bottom: 8px;
+        }
+
+        .profile-copy strong {
+            display: block;
+            margin-bottom: 22px;
+            font-size: 14px;
+            letter-spacing: 0.04em;
+        }
+
+        .sessions {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .sessions .eyebrow {
+            color: rgba(244, 241, 234, 0.55);
+        }
+
+        .session-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-top: clamp(46px, 9vh, 100px);
+            border-top: 1px solid rgba(244, 241, 234, 0.3);
+        }
+
+        .session-item {
+            min-height: 150px;
+            padding: 24px 24px 16px 0;
+            border-bottom: 1px solid rgba(244, 241, 234, 0.3);
+        }
+
+        .session-item + .session-item {
+            padding-left: 24px;
+            border-left: 1px solid rgba(244, 241, 234, 0.3);
+        }
+
+        .session-item span {
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+        }
+
+        .session-item h3 {
+            margin: 30px 0 8px;
+            font-size: clamp(18px, 2vw, 26px);
+            font-weight: 500;
+        }
+
+        .session-item p {
+            margin: 0;
+            color: rgba(244, 241, 234, 0.58);
+            font-size: 13px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            align-self: flex-start;
+            margin-top: 42px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--accent);
+            font-size: 14px;
+        }
+
+        .contact-link span {
+            color: var(--accent);
+            transition: transform 180ms ease;
+        }
+
+        .contact-link:hover span {
+            transform: translate(4px, -4px);
+        }
+
+        .panel > .eyebrow,
+        .panel h1,
+        .panel h2,
+        .hero-copy,
+        .profile-copy,
+        .session-list,
+        .contact-link {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 700ms ease, transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+        }
+
+        .panel.is-visible > .eyebrow,
+        .panel.is-visible h1,
+        .panel.is-visible h2,
+        .panel.is-visible .hero-copy,
+        .panel.is-visible .profile-copy,
+        .panel.is-visible .session-list,
+        .panel.is-visible .contact-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .panel.is-visible h1,
+        .panel.is-visible h2 {
+            transition-delay: 100ms;
+        }
+
+        .panel.is-visible .hero-copy,
+        .panel.is-visible .profile-copy,
+        .panel.is-visible .session-list {
+            transition-delay: 220ms;
+        }
+
+        @keyframes orbit {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 700px) {
+            .site-header {
+                padding: 20px 6vw;
+            }
+
+            .site-nav {
+                gap: 15px;
+                font-size: 10px;
+            }
+
+            .panel {
+                padding: 110px 7vw 54px;
+            }
+
+            .hero h1 {
+                font-size: clamp(62px, 17vw, 112px);
+            }
+
+            .hero-copy {
+                align-items: flex-start;
+                flex-direction: column;
+                margin-top: 30px;
+            }
+
+            .hero::after {
+                right: 8%;
+                bottom: 10%;
+            }
+
+            .profile-layout {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+
+            .profile-copy {
+                max-width: 460px;
+            }
+
+            .session-list {
+                grid-template-columns: 1fr;
+                margin-top: 42px;
+            }
+
+            .session-item {
+                min-height: 112px;
+                padding: 17px 0;
+            }
+
+            .session-item + .session-item {
+                padding-left: 0;
+                border-left: 0;
+            }
+
+            .session-item h3 {
+                margin: 12px 0 5px;
+            }
+
+            .contact-link {
+                margin-top: 26px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-snap-type: none;
+            }
+
+            .panel > .eyebrow,
+            .panel h1,
+            .panel h2,
+            .hero-copy,
+            .profile-copy,
+            .session-list,
+            .contact-link {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="#intro" aria-label="MOON 홈">MOON®</a>
+        <nav class="site-nav" aria-label="주요 메뉴">
+            <a href="#intro">INTRO</a>
+            <a href="#profile">PROFILE</a>
+            <a href="#sessions">SESSIONS</a>
+        </nav>
+    </header>
+
+    <main class="wrap">
+        <section class="panel hero is-visible" id="intro" aria-labelledby="intro-title">
+            <p class="eyebrow">Independent creative portfolio · Seoul</p>
+            <h1 id="intro-title"><span>MAKE</span><span>IT MATTER.</span></h1>
+            <div class="hero-copy">
+                <p>좋은 아이디어를 발견하고,<br>오래 기억될 경험으로 만듭니다.</p>
+                <span class="scroll-note">SCROLL TO EXPLORE ↓</span>
+            </div>
+        </section>
+
+        <section class="panel profile" id="profile" aria-labelledby="profile-title">
+            <p class="eyebrow">01 — A little about me</p>
+            <div class="profile-layout">
+                <h2 id="profile-title">사람과<br>생각을 잇는<br>크리에이터.</h2>
+                <div class="profile-copy">
+                    <strong>HELLO, I’M MOON.</strong>
+                    <p>브랜드의 목소리를 찾고, 복잡한 생각을 명확한 경험으로 풀어냅니다. 기획부터 디자인까지 작은 디테일에도 이유를 담습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel sessions" id="sessions" aria-labelledby="sessions-title">
+            <p class="eyebrow">02 — What I do</p>
+            <h2 id="sessions-title">Sessions</h2>
+            <div class="session-list">
+                <article class="session-item">
+                    <span>01 / STRATEGY</span>
+                    <h3>브랜드 기획</h3>
+                    <p>방향을 찾고, 이야기를 설계합니다.</p>
+                </article>
+                <article class="session-item">
+                    <span>02 / IDENTITY</span>
+                    <h3>비주얼 아이덴티티</h3>
+                    <p>브랜드의 태도를 시각 언어로 만듭니다.</p>
+                </article>
+                <article class="session-item">
+                    <span>03 / EXPERIENCE</span>
+                    <h3>디지털 경험</h3>
+                    <p>사용자와 만나는 순간을 디자인합니다.</p>
+                </article>
+            </div>
+            <a class="contact-link" href="mailto:hello@moon.studio">함께 이야기 나눠요 <span>↗</span></a>
+        </section>
+    </main>
+
+    <script>
+        const panels = document.querySelectorAll(".panel");
+        let wheelLocked = false;
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            panels.forEach((panel) => observer.observe(panel));
+        } else {
+            panels.forEach((panel) => panel.classList.add("is-visible"));
+        }
+
+        window.addEventListener("wheel", (event) => {
+            if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) {
+                return;
+            }
+
+            if (wheelLocked) {
+                event.preventDefault();
+                return;
+            }
+
+            const currentIndex = Array.from(panels).reduce((closestIndex, panel, index) => {
+                const currentDistance = Math.abs(panels[closestIndex].getBoundingClientRect().top);
+                const panelDistance = Math.abs(panel.getBoundingClientRect().top);
+                return panelDistance < currentDistance ? index : closestIndex;
+            }, 0);
+            const nextIndex = currentIndex + (event.deltaY > 0 ? 1 : -1);
+
+            if (nextIndex < 0 || nextIndex >= panels.length) {
+                return;
+            }
+
+            event.preventDefault();
+            wheelLocked = true;
+            panels[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+            window.setTimeout(() => {
+                wheelLocked = false;
+            }, 850);
+        }, { passive: false });
+    </script>
+</body>
+</html>
