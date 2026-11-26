@@ -197,38 +197,42 @@
 
         .session-list {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            margin-top: clamp(46px, 9vh, 100px);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
             border-top: 1px solid rgba(244, 241, 234, 0.3);
         }
 
         .session-item {
-            min-height: 150px;
-            padding: 24px 24px 16px 0;
+            min-width: 0;
+            min-height: 180px;
+            padding: 28px;
             border-bottom: 1px solid rgba(244, 241, 234, 0.3);
+            transition: background-color 220ms ease, transform 220ms ease, border-color 220ms ease;
         }
 
-        .session-item + .session-item {
-            padding-left: 24px;
-            border-left: 1px solid rgba(244, 241, 234, 0.3);
+        .session-item:hover {
+            background-color: rgba(211, 243, 107, 0.1);
+            transform: translateY(-3px);
         }
 
-        .session-item span {
-            color: var(--accent);
-            font-size: 11px;
-            letter-spacing: 0.12em;
-        }
-
-        .session-item h3 {
-            margin: 30px 0 8px;
-            font-size: clamp(18px, 2vw, 26px);
-            font-weight: 500;
-        }
-
-        .session-item p {
+        .session-item h2 {
             margin: 0;
-            color: rgba(244, 241, 234, 0.58);
-            font-size: 13px;
+            font-size: clamp(22px, 3.2vw, 42px);
+            font-weight: 500;
+            letter-spacing: -0.05em;
+            line-height: 1.2;
+            transition: color 220ms ease;
+        }
+
+        .session-item:hover h2 {
+            color: var(--accent);
+        }
+
+        .session-item:nth-child(even) {
+            border-left: 1px solid rgba(244, 241, 234, 0.3);
         }
 
         .contact-link {
@@ -327,23 +331,17 @@
                 max-width: 460px;
             }
 
-            .session-list {
-                grid-template-columns: 1fr;
-                margin-top: 42px;
+            .sessions {
+                overflow: visible;
             }
 
             .session-item {
-                min-height: 112px;
-                padding: 17px 0;
+                min-height: 120px;
+                padding: 20px;
             }
 
-            .session-item + .session-item {
-                padding-left: 0;
-                border-left: 0;
-            }
-
-            .session-item h3 {
-                margin: 12px 0 5px;
+            .session-item h2 {
+                font-size: clamp(20px, 5vw, 28px);
             }
 
             .contact-link {
@@ -410,25 +408,20 @@
         </section>
 
         <section class="panel sessions" id="sessions" aria-labelledby="sessions-title">
-            <p class="eyebrow">02 — What I do</p>
-            <h2 id="sessions-title">Sessions</h2>
-            <div class="session-list">
-                <article class="session-item">
-                    <span>01 / STRATEGY</span>
-                    <h3>브랜드 기획</h3>
-                   
-                </article>
-                <article class="session-item">
-                    <span>02 / IDENTITY</span>
-                    <h3>비주얼 아이덴티티</h3>
-                  
-                </article>
-                <article class="session-item">
-                    <span>03 / EXPERIENCE</span>
-                    <h3>디지털 경험</h3>
-                  
-                </article>
-            </div>
+           <ul class="session-list" aria-label="제공 서비스">
+            <li class="session-item">
+                <h2>상세페이지</h2>
+            </li>
+            <li class="session-item">
+                <h2>디자인 리뉴얼</h2>
+            </li>
+            <li class="session-item">
+                <h2>프리미어 편집작업</h2>
+            </li>
+            <li class="session-item">
+                <h2>애프터 이펙트 모션작업</h2>
+            </li>
+           </ul>
             <a class="contact-link" href="mailto:hello@moon.studio">함께 이야기 나눠요 <span>↗</span></a>
         </section>
     </main>
