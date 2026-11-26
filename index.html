@@ -437,6 +437,40 @@
         const panels = document.querySelectorAll(".panel");
         let wheelLocked = false;
 
+        const scrollToPanel = (panel) => {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                window.scrollTo(0, panel.offsetTop);
+                return;
+            }
+
+            const startY = window.scrollY;
+            const targetY = panel.offsetTop;
+            const duration = 800;
+            const root = document.documentElement;
+            const previousScrollBehavior = root.style.scrollBehavior;
+            let startTime;
+
+            root.style.scrollBehavior = "auto";
+
+            const animate = (currentTime) => {
+                if (startTime === undefined) {
+                    startTime = currentTime;
+                }
+
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const easeInProgress = progress * progress * progress;
+                window.scrollTo(0, startY + (targetY - startY) * easeInProgress);
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(animate);
+                } else {
+                    root.style.scrollBehavior = previousScrollBehavior;
+                }
+            };
+
+            window.requestAnimationFrame(animate);
+        };
+
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
@@ -474,7 +508,7 @@
 
             event.preventDefault();
             wheelLocked = true;
-            panels[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+            scrollToPanel(panels[nextIndex]);
             window.setTimeout(() => {
                 wheelLocked = false;
             }, 850);
